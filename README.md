@@ -1,6 +1,17 @@
+<p align="center">
+  <img src="public/icon.svg" alt="Charognard" width="120" height="120" />
+</p>
+
 # Charognard for Instagram
 
+[![License](https://img.shields.io/github/license/antoinekm/charognard)](LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-19-61dafb)](https://react.dev/)
+[![WXT](https://img.shields.io/badge/WXT-0.20-green)](https://wxt.dev/)
+
 🦅 **Follow. Grow. Repeat.**
+
+> Your ultimate Instagram follow-for-follow companion. Discover new accounts, mass-follow with one click, and track your growth.
 
 ## Installation
 
@@ -40,6 +51,10 @@ pnpm compile      # Type checking
 ## Support
 
 - 💬 [Send me a DM on Instagram](https://www.instagram.com/direct/t/104730140919569/)
+
+## Disclaimer
+
+This project is not affiliated with, authorized, maintained, sponsored or endorsed by Instagram or Meta Platforms, Inc. Use at your own risk.
 
 ---
 
