@@ -17,10 +17,11 @@ export default defineConfig({
     browser_specific_settings: {
       gecko: {
         id: 'charognard-instagram@antoinek.fr',
+        // @ts-ignore - WXT doesn't support this field yet (https://github.com/wxt-dev/wxt/issues/1975)
+        data_collection_permissions: {
+          required: ['none'],
+        },
       },
-    },
-    data_collection_permissions: {
-      dataCollectionPerformed: false,
     },
   },
   vite: () => ({
