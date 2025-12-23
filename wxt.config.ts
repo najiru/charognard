@@ -14,6 +14,14 @@ export default defineConfig({
     action: {
       default_title: 'Charognard for Instagram™',
     },
+    browser_specific_settings: {
+      gecko: {
+        id: 'charognard-instagram@antoinek.fr',
+      },
+    },
+    data_collection_permissions: {
+      dataCollectionPerformed: false,
+    },
   },
   vite: () => ({
     plugins: [tailwindcss()],
