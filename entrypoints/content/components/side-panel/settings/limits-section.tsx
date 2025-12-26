@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
+import { Switch } from '@/components/ui/switch';
 import { AlertTriangleIcon } from 'lucide-react';
 import { DEFAULT_FOLLOW_LIMIT, DEFAULT_UNFOLLOW_LIMIT } from '@/lib/storage';
 
@@ -11,8 +12,10 @@ interface LimitsSectionProps {
   remainingUnfollows: number;
   editFollowLimit: string;
   editUnfollowLimit: string;
+  skipFollowers: boolean;
   onEditFollowLimitChange: (value: string) => void;
   onEditUnfollowLimitChange: (value: string) => void;
+  onSkipFollowersChange: (value: boolean) => void;
   onSave: () => void;
   onReset: () => void;
   saving: boolean;
@@ -25,8 +28,10 @@ export function LimitsSection({
   remainingUnfollows,
   editFollowLimit,
   editUnfollowLimit,
+  skipFollowers,
   onEditFollowLimitChange,
   onEditUnfollowLimitChange,
+  onSkipFollowersChange,
   onSave,
   onReset,
   saving,
@@ -43,6 +48,17 @@ export function LimitsSection({
             restrict your account if you exceed their rate limits.
           </p>
         </div>
+      </div>
+
+      {/* Skip Followers Toggle */}
+      <div className="flex items-center justify-between gap-4 p-3 rounded-lg border border-border">
+        <div className="space-y-0.5">
+          <label className="text-sm font-medium">Skip existing followers</label>
+          <p className="text-xs text-muted-foreground">
+            Don't follow users who already follow you during mass-follow
+          </p>
+        </div>
+        <Switch checked={skipFollowers} onCheckedChange={onSkipFollowersChange} />
       </div>
 
       {/* Follow Limit */}

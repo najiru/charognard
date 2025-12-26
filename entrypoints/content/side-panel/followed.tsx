@@ -16,7 +16,8 @@ import {
   type FollowedProfile,
 } from '@/lib/storage';
 import { toastManager } from '@/components/ui/toast';
-import { RefreshCwIcon, UserMinusIcon, HeartIcon, SearchIcon } from 'lucide-react';
+import { RefreshCwIcon, UserMinusIcon, HeartIcon, SearchIcon, XIcon } from 'lucide-react';
+import { Tooltip, TooltipTrigger, TooltipPopup } from '@/components/ui/tooltip';
 import { ProfileCard } from '../components/ui/profile-card';
 import { ActionFooter } from '../components/ui/action-footer';
 import { FollowBackStatus } from '../components/side-panel/followed/follow-back-status';
@@ -113,6 +114,24 @@ export function FollowedTab({ container }: FollowedTabProps) {
       toastManager.add({ title: 'Failed to unfollow', type: 'error' });
     } finally {
       setUnfollowingUser(null);
+    }
+  };
+
+  const handleRemoveFromList = async (userId: string) => {
+    const profile = profiles.find((p) => p.user.pk === userId);
+
+    try {
+      await removeFollowedProfile(userId);
+      setProfiles((prev) => prev.filter((p) => p.user.pk !== userId));
+      setSelectedUsers((prev) => {
+        const next = new Set(prev);
+        next.delete(userId);
+        return next;
+      });
+      toastManager.add({ title: `Removed @${profile?.user.username ?? 'user'} from list`, type: 'success' });
+    } catch (err) {
+      console.error('Failed to remove from list:', err);
+      toastManager.add({ title: 'Failed to remove from list', type: 'error' });
     }
   };
 
@@ -353,21 +372,38 @@ export function FollowedTab({ container }: FollowedTabProps) {
                     </p>
                   }
                 >
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    onClick={() => handleUnfollow(profile.user.pk)}
-                    disabled={isUnfollowing || massUnfollowing || checkingStatus || remainingUnfollows === 0}
-                  >
-                    {isUnfollowing ? (
-                      <Spinner className="size-4" />
-                    ) : (
-                      <>
-                        <UserMinusIcon className="size-4" />
-                        Unfollow
-                      </>
-                    )}
-                  </Button>
+                  <div className="flex items-center gap-1">
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      onClick={() => handleUnfollow(profile.user.pk)}
+                      disabled={isUnfollowing || massUnfollowing || checkingStatus || remainingUnfollows === 0}
+                    >
+                      {isUnfollowing ? (
+                        <Spinner className="size-4" />
+                      ) : (
+                        <>
+                          <UserMinusIcon className="size-4" />
+                          Unfollow
+                        </>
+                      )}
+                    </Button>
+                    <Tooltip>
+                      <TooltipTrigger
+                        render={
+                          <Button
+                            variant="ghost"
+                            size="icon-sm"
+                            onClick={() => handleRemoveFromList(profile.user.pk)}
+                            disabled={isUnfollowing || massUnfollowing || checkingStatus}
+                          >
+                            <XIcon className="size-4" />
+                          </Button>
+                        }
+                      />
+                      <TooltipPopup container={container}>Remove from list (keep following)</TooltipPopup>
+                    </Tooltip>
+                  </div>
                 </ProfileCard>
               );
             })}

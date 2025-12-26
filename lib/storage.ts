@@ -17,6 +17,7 @@ export interface DailyActions {
 export interface UserSettings {
   followLimit: number;
   unfollowLimit: number;
+  skipFollowers: boolean; // Skip users who already follow us during mass-follow
 }
 
 export type ScheduleFrequency = 'Daily' | 'Weekly';
@@ -57,6 +58,7 @@ interface StorageData {
 const STORAGE_KEY = 'ig_extension_data';
 const DEFAULT_FOLLOW_LIMIT = 150;
 const DEFAULT_UNFOLLOW_LIMIT = 150;
+const DEFAULT_SKIP_FOLLOWERS = true;
 
 const DEFAULT_AUTOMATION: AutomationSettings = {
   enabled: false,
@@ -77,6 +79,7 @@ function getDefaultStorageData(): StorageData {
     settings: {
       followLimit: DEFAULT_FOLLOW_LIMIT,
       unfollowLimit: DEFAULT_UNFOLLOW_LIMIT,
+      skipFollowers: DEFAULT_SKIP_FOLLOWERS,
     },
     automation: { ...DEFAULT_AUTOMATION },
   };
@@ -110,6 +113,7 @@ async function getStorageData(): Promise<StorageData> {
       settings: {
         followLimit: DEFAULT_FOLLOW_LIMIT,
         unfollowLimit: DEFAULT_UNFOLLOW_LIMIT,
+        skipFollowers: DEFAULT_SKIP_FOLLOWERS,
       },
       automation: { ...DEFAULT_AUTOMATION },
     };
@@ -136,7 +140,13 @@ async function getStorageData(): Promise<StorageData> {
     storageData.settings = {
       followLimit: DEFAULT_FOLLOW_LIMIT,
       unfollowLimit: DEFAULT_UNFOLLOW_LIMIT,
+      skipFollowers: DEFAULT_SKIP_FOLLOWERS,
     };
+  }
+
+  // Ensure skipFollowers setting exists (migration for existing users)
+  if (storageData.settings.skipFollowers === undefined) {
+    storageData.settings.skipFollowers = DEFAULT_SKIP_FOLLOWERS;
   }
 
   // Ensure automation settings exist
@@ -332,4 +342,4 @@ export async function hasCompletedOnboarding(): Promise<boolean> {
   return onboarding.completed;
 }
 
-export { DEFAULT_FOLLOW_LIMIT, DEFAULT_UNFOLLOW_LIMIT, DEFAULT_AUTOMATION };
+export { DEFAULT_FOLLOW_LIMIT, DEFAULT_UNFOLLOW_LIMIT, DEFAULT_SKIP_FOLLOWERS, DEFAULT_AUTOMATION };

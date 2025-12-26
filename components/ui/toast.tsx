@@ -58,7 +58,7 @@ function Toasts({ position = "bottom-right", container }: { position: ToastPosit
     <Toast.Portal data-slot="toast-portal" container={container}>
       <Toast.Viewport
         className={cn(
-          "fixed z-50 mx-auto flex w-[calc(100%-var(--toast-inset)*2)] max-w-90 [--toast-inset:--spacing(4)] sm:[--toast-inset:--spacing(8)]",
+          "fixed z-10001 mx-auto flex w-[calc(100%-var(--toast-inset)*2)] max-w-90 [--toast-inset:--spacing(4)] sm:[--toast-inset:--spacing(8)]",
           // Vertical positioning
           "data-[position*=top]:top-(--toast-inset)",
           "data-[position*=bottom]:bottom-(--toast-inset)",
@@ -200,7 +200,7 @@ function AnchoredToasts() {
 
           return (
             <Toast.Positioner
-              className="z-50 max-w-[min(--spacing(64),var(--available-width))]"
+              className="z-10001 max-w-[min(--spacing(64),var(--available-width))]"
               data-slot="toast-positioner"
               key={toast.id}
               sideOffset={positionerProps.sideOffset ?? 4}
