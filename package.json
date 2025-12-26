@@ -2,7 +2,7 @@
   "name": "charognard-for-instagram",
   "description": "Charognard for Instagram™ - Follow/Unfollow Extension",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "scripts": {
     "dev": "wxt",
@@ -12,7 +12,10 @@
     "zip": "wxt zip",
     "zip:firefox": "wxt zip -b firefox",
     "compile": "tsc --noEmit",
-    "postinstall": "wxt prepare"
+    "postinstall": "wxt prepare",
+    "version:patch": "npm version patch --no-git-tag-version && git add package.json && git commit -m \"🔖 release v$(node -p \"require('./package.json').version\")\"",
+    "version:minor": "npm version minor --no-git-tag-version && git add package.json && git commit -m \"🔖 release v$(node -p \"require('./package.json').version\")\"",
+    "version:major": "npm version major --no-git-tag-version && git add package.json && git commit -m \"🔖 release v$(node -p \"require('./package.json').version\")\""
   },
   "dependencies": {
     "@base-ui/react": "^1.0.0",
