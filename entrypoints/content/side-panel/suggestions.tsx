@@ -6,7 +6,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Tooltip, TooltipTrigger, TooltipPopup } from '@/components/ui/tooltip';
 import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription, EmptyContent } from '@/components/ui/empty';
 import { useAuth } from '../hooks/use-auth';
-import { fetchSuggestions, followUser, unfollowUser } from '@/lib/instagram';
+import { fetchSuggestions, followUser, unfollowUser, checkFriendshipStatus } from '@/lib/instagram';
 import {
   addFollowedProfile,
   removeFollowedProfile,
@@ -156,8 +156,13 @@ export function SuggestionsTab({ container }: SuggestionsTabProps) {
 
     if (usersToFollow.length === 0) return;
 
+    const settings = await getSettings();
+    const shouldSkipFollowers = settings.skipFollowers;
+
     setMassFollowing(true);
     setMassFollowProgress({ current: 0, total: usersToFollow.length });
+
+    let skippedCount = 0;
 
     for (let i = 0; i < usersToFollow.length; i++) {
       if (!(await canPerformAction('follow'))) {
@@ -169,6 +174,23 @@ export function SuggestionsTab({ container }: SuggestionsTabProps) {
       setMassFollowProgress({ current: i + 1, total: usersToFollow.length });
 
       try {
+        // Check if user already follows us (skip if enabled)
+        if (shouldSkipFollowers) {
+          const friendshipStatus = await checkFriendshipStatus(suggestion.user.pk);
+          if (friendshipStatus.followed_by) {
+            // User already follows us, skip them
+            setSelectedUsers((prev) => {
+              const next = new Set(prev);
+              next.delete(suggestion.user.pk);
+              return next;
+            });
+            skippedCount++;
+            // Small delay before checking next user
+            await new Promise((resolve) => setTimeout(resolve, 500 + Math.random() * 500));
+            continue;
+          }
+        }
+
         await followUser(suggestion.user.pk);
         await incrementDailyActionCount('follow');
         await addFollowedProfile(suggestion.user);
@@ -186,6 +208,13 @@ export function SuggestionsTab({ container }: SuggestionsTabProps) {
       if (i < usersToFollow.length - 1) {
         await new Promise((resolve) => setTimeout(resolve, 2000 + Math.random() * 2000));
       }
+    }
+
+    if (skippedCount > 0) {
+      toastManager.add({
+        title: `Skipped ${skippedCount} user${skippedCount > 1 ? 's' : ''} who already follow you`,
+        type: 'info',
+      });
     }
 
     await refreshRemainingActions();

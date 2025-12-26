@@ -12,6 +12,7 @@ import {
   updateAutomationSettings,
   DEFAULT_FOLLOW_LIMIT,
   DEFAULT_UNFOLLOW_LIMIT,
+  DEFAULT_SKIP_FOLLOWERS,
   type ScheduleFrequency,
   type DayOfWeek,
 } from '@/lib/storage';
@@ -34,6 +35,7 @@ export function SettingsTab({ container }: SettingsTabProps) {
   const [unfollowLimit, setUnfollowLimit] = useState<number>(150);
   const [editFollowLimit, setEditFollowLimit] = useState<string>('150');
   const [editUnfollowLimit, setEditUnfollowLimit] = useState<string>('150');
+  const [skipFollowers, setSkipFollowers] = useState<boolean>(true);
   const [savingSettings, setSavingSettings] = useState(false);
 
   // Automation settings
@@ -60,6 +62,7 @@ export function SettingsTab({ container }: SettingsTabProps) {
     setUnfollowLimit(settings.unfollowLimit);
     setEditFollowLimit(String(settings.followLimit));
     setEditUnfollowLimit(String(settings.unfollowLimit));
+    setSkipFollowers(settings.skipFollowers);
   };
 
   const loadAutomationSettings = async () => {
@@ -90,6 +93,7 @@ export function SettingsTab({ container }: SettingsTabProps) {
       await updateSettings({
         followLimit: newFollowLimit,
         unfollowLimit: newUnfollowLimit,
+        skipFollowers,
       });
       await refreshRemainingActions();
       toastManager.add({ title: 'Settings saved', type: 'success' });
@@ -104,11 +108,13 @@ export function SettingsTab({ container }: SettingsTabProps) {
   const handleResetSettings = async () => {
     setEditFollowLimit(String(DEFAULT_FOLLOW_LIMIT));
     setEditUnfollowLimit(String(DEFAULT_UNFOLLOW_LIMIT));
+    setSkipFollowers(DEFAULT_SKIP_FOLLOWERS);
     setSavingSettings(true);
     try {
       await updateSettings({
         followLimit: DEFAULT_FOLLOW_LIMIT,
         unfollowLimit: DEFAULT_UNFOLLOW_LIMIT,
+        skipFollowers: DEFAULT_SKIP_FOLLOWERS,
       });
       await refreshRemainingActions();
       toastManager.add({ title: 'Settings reset', type: 'success' });
@@ -160,8 +166,10 @@ export function SettingsTab({ container }: SettingsTabProps) {
           remainingUnfollows={remainingUnfollows}
           editFollowLimit={editFollowLimit}
           editUnfollowLimit={editUnfollowLimit}
+          skipFollowers={skipFollowers}
           onEditFollowLimitChange={setEditFollowLimit}
           onEditUnfollowLimitChange={setEditUnfollowLimit}
+          onSkipFollowersChange={setSkipFollowers}
           onSave={handleSaveSettings}
           onReset={handleResetSettings}
           saving={savingSettings}
