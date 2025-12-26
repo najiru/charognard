@@ -176,18 +176,23 @@ export function SuggestionsTab({ container }: SuggestionsTabProps) {
       try {
         // Check if user already follows us (skip if enabled)
         if (shouldSkipFollowers) {
-          const friendshipStatus = await checkFriendshipStatus(suggestion.user.pk);
-          if (friendshipStatus.followed_by) {
-            // User already follows us, skip them
-            setSelectedUsers((prev) => {
-              const next = new Set(prev);
-              next.delete(suggestion.user.pk);
-              return next;
-            });
-            skippedCount++;
-            // Small delay before checking next user
-            await new Promise((resolve) => setTimeout(resolve, 500 + Math.random() * 500));
-            continue;
+          try {
+            const friendshipStatus = await checkFriendshipStatus(suggestion.user.pk);
+            if (friendshipStatus.followed_by) {
+              // User already follows us, skip them
+              setSelectedUsers((prev) => {
+                const next = new Set(prev);
+                next.delete(suggestion.user.pk);
+                return next;
+              });
+              skippedCount++;
+              // Small delay before checking next user
+              await new Promise((resolve) => setTimeout(resolve, 500 + Math.random() * 500));
+              continue;
+            }
+          } catch (err) {
+            // If friendship check fails, proceed with follow attempt
+            console.error('Failed to check friendship status:', suggestion.user.username, err);
           }
         }
 
