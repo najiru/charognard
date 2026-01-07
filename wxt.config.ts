@@ -9,7 +9,7 @@ export default defineConfig({
     baseIconPath: 'public/icon.svg',
   },
   manifest: {
-    name: 'Charognard for Instagram™',
+    name: 'Charognard: Get Followers, Auto Follow & Tracker for Instagram™',
     permissions: ['tabs', 'storage', 'alarms'],
     action: {
       default_title: 'Charognard for Instagram™',
