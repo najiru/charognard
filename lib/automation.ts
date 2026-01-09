@@ -69,40 +69,61 @@ export async function runAutomation(): Promise<AutomationResult> {
 async function runAutoFollow(maxCount: number): Promise<{ count: number; errors: string[] }> {
   const errors: string[] = [];
   let count = 0;
+  let consecutiveEmptyBatches = 0;
+  const maxEmptyBatches = 3; // Safety limit to avoid infinite loops
 
-  try {
-    // Fetch suggestions
-    const response = await fetchSuggestions();
-    const suggestions = response.suggested_users.suggestions;
+  while (count < maxCount && consecutiveEmptyBatches < maxEmptyBatches) {
+    try {
+      // Fetch suggestions (Instagram refreshes these after follows)
+      const response = await fetchSuggestions();
+      const suggestions = response.suggested_users.suggestions;
 
-    // Filter out private accounts
-    const publicSuggestions = suggestions.filter((s) => !s.user.is_private);
+      // Filter out private accounts
+      const publicSuggestions = suggestions.filter((s) => !s.user.is_private);
 
-    for (const suggestion of publicSuggestions) {
-      if (count >= maxCount) {
-        break;
+      if (publicSuggestions.length === 0) {
+        consecutiveEmptyBatches++;
+        continue;
       }
 
-      if (!(await canPerformAction('follow'))) {
-        break;
-      }
+      let followedInBatch = 0;
 
-      try {
-        await followUser(suggestion.user.pk);
-        await incrementDailyActionCount('follow');
-        await addFollowedProfile(suggestion.user);
-        count++;
-
-        // Random delay between actions
-        if (count < maxCount) {
-          await randomDelay();
+      for (const suggestion of publicSuggestions) {
+        if (count >= maxCount) {
+          break;
         }
-      } catch (error) {
-        errors.push(`Failed to follow @${suggestion.user.username}: ${error}`);
+
+        if (!(await canPerformAction('follow'))) {
+          // Daily limit reached, exit completely
+          return { count, errors };
+        }
+
+        try {
+          await followUser(suggestion.user.pk);
+          await incrementDailyActionCount('follow');
+          await addFollowedProfile(suggestion.user);
+          count++;
+          followedInBatch++;
+
+          // Random delay between actions
+          if (count < maxCount) {
+            await randomDelay();
+          }
+        } catch (error) {
+          errors.push(`Failed to follow @${suggestion.user.username}: ${error}`);
+        }
       }
+
+      // Reset empty batch counter if we followed anyone
+      if (followedInBatch > 0) {
+        consecutiveEmptyBatches = 0;
+      } else {
+        consecutiveEmptyBatches++;
+      }
+    } catch (error) {
+      errors.push(`Failed to fetch suggestions: ${error}`);
+      break;
     }
-  } catch (error) {
-    errors.push(`Failed to fetch suggestions: ${error}`);
   }
 
   return { count, errors };
