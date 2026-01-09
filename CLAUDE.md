@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-WXT browser extension for Instagram follow/unfollow functionality, built with React, TypeScript, and Tailwind CSS v4 (coss/ui components).
+WXT browser extension for Instagram follow/unfollow functionality, built with React 19, TypeScript, and Tailwind CSS v4 with coss/ui components (Base UI React).
 
 ## Commands
 
@@ -16,7 +16,12 @@ pnpm build:firefox    # Build for production (Firefox)
 pnpm zip              # Create distributable zip (Chrome)
 pnpm zip:firefox      # Create distributable zip (Firefox)
 pnpm compile          # TypeScript type checking
+pnpm version:patch    # Bump patch version and commit
+pnpm version:minor    # Bump minor version and commit
+pnpm version:major    # Bump major version and commit
 ```
+
+Use `@/` path alias for imports from project root (configured in `wxt.config.ts`).
 
 ## Architecture
 
